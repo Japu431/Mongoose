@@ -17,7 +17,7 @@ const addLink = async (req, res) => {
   link
     .save()
     .then((doc) => {
-      res.send("Link adicionado com sucesso... >>>> " + doc);
+      res.send("Link adicionado com sucesso. :)");
     })
     .catch((err) => {
       console.log(err);
@@ -25,4 +25,27 @@ const addLink = async (req, res) => {
     });
 };
 
-module.exports = { redirect, addLink };
+const allLinks = async (req, res) => {
+  try {
+    let links = await Link.find({});
+    res.render("all", { links });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+const deleteLink = async (req, res) => {
+  let id = req.params.id;
+
+  if (!id) {
+    id = req.body.id;
+  }
+
+  try {
+    res.send(await Link.findByIdAndDelete(id));
+  } catch (err) {
+    req.send(err)
+  }
+};
+
+module.exports = { redirect, addLink, allLinks, deleteLink };
