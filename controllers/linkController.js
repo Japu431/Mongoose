@@ -17,10 +17,11 @@ const addLink = async (req, res) => {
   link
     .save()
     .then((doc) => {
-      res.send(doc);
+      res.send("Link adicionado com sucesso... >>>> " + doc);
     })
     .catch((err) => {
       console.log(err);
+      res.render("index", { err, body: req.body });
     });
 };
 

@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const PORT = 3000;
 const linkRoute = require("./routes/linkRoute");
+const path = require('path');
 
 mongoose.connect("mongodb://localhost/newlinks", {
   useNewUrlParser: true,
@@ -17,6 +18,8 @@ db.on("error", (err) => {
 db.once("open", () => {
   console.log("Banco carregado");
 });
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use("/", linkRoute);
 

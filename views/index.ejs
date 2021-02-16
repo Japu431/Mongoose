@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirection</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+    <form action="/" method="POST">
+      <input class="field" type="text" name="title" placeholder="Title" value="<%=body.title%>" required />
+      <input
+        class="field"
+        type="text"
+        name="description"
+        placeholder="Description" value="<%=body.description%>"
+      />
+
+      <input class="field" type="text" name="url" placeholder="URL" value="<%=body.url%>" required />
+      <button>Salvar</button>
+
+      <%if(err) {%>
+      <h3><%=err.message%></h3>
+      <%}%>
+
+    </form>
+  </body>
+</html>
