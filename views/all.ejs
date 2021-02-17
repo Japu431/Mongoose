@@ -9,10 +9,15 @@
   <body>
     <% for(let i = 0 ; i < links.length ; i++) {%>
     <div id="<%=links[i]._id%>">
+        <form method="POST" action="/?_method=DELETE">
       <h2><%=links[i].title%></h2>
       <div><%=links[i].description%></div>
       <div><%=links[i].url%></div>
+      <input type="text" name="id" value="<%=links[i]._id%>" hidden>
+      <button type="submit" onclick="deleteLink('<%=links[i]._id%>')">Deletar</button>
+    </form>
     </div>
     <%}%>
+   
   </body>
 </html>

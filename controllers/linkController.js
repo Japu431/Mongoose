@@ -17,7 +17,7 @@ const addLink = async (req, res) => {
   link
     .save()
     .then((doc) => {
-      res.send("Link adicionado com sucesso. :)");
+      res.send("Link adicionado com sucesso... para ver todos os links insira \n\n https://localhost:3000/all");
     })
     .catch((err) => {
       console.log(err);
@@ -42,9 +42,10 @@ const deleteLink = async (req, res) => {
   }
 
   try {
-    res.send(await Link.findByIdAndDelete(id));
+    await Link.findByIdAndDelete(id)
+    res.redirect('/all');
   } catch (err) {
-    req.send(err)
+    res.status(404).send(err)
   }
 };
 
