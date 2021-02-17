@@ -29,8 +29,8 @@ const addLink = async (req, res) => {
 
 const allLinks = async (req, res) => {
   try {
-    let links = await Link.find({});
-    res.render("all", { links });
+    let docs = await Link.find({});
+    res.render("all", { links: docs });
   } catch (err) {
     res.send(err);
   }
@@ -51,4 +51,36 @@ const deleteLink = async (req, res) => {
   }
 };
 
-module.exports = { redirect, addLink, allLinks, deleteLink };
+const loadLink = async (req, res) => {
+  let id = req.params.id;
+
+  try {
+    let doc = await Link.findById(id);
+    res.render("edit", { err : false , body: doc });
+  } catch (err) {
+    res.status(404).send(err);
+  }
+};
+
+const editLink = async (req, res) => {
+  let link = {};
+  link.title = req.body.title;
+  link.description = req.body.description;
+  link.url = req.body.url;
+
+  let id = req.params.id;
+  if (!id) {
+    id = req.body.id;
+  }
+s
+  console.log(id)
+
+  try {
+    let doc = await Link.updateOne({ _id: id } , link);
+    res.redirect("/");
+  } catch (err) {
+    res.render("edit", { err, body: req.body });
+  }
+}
+
+module.exports = { redirect, addLink, allLinks, deleteLink, loadLink , editLink};
