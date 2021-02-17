@@ -3,7 +3,7 @@ const Link = require("../models/Link");
 const redirect = async (req, res, next) => {
   let title = req.params.title;
   try {
-    let doc = await Link.findOne({ title });
+    let doc = await Link.findOneAndUpdate({ title } , {$inc: {click: 1}});
     console.log(doc);
 
     if (doc) {
@@ -23,7 +23,7 @@ const addLink = async (req, res) => {
     let doc = await link.save();
     res.redirect("/");
   } catch (err) {
-    res.render("index", { err, body: req.body });
+    res.render("add", { err, body: req.body });
   }
 };
 
@@ -72,7 +72,6 @@ const editLink = async (req, res) => {
   if (!id) {
     id = req.body.id;
   }
-s
   console.log(id)
 
   try {

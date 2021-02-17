@@ -5,37 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirection</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <h1>Edit Link</h1>
-    <form action="/edit/<%=body.id%>" method="POST">
-      <input
-        class="field"
-        type="text"
-        name="title"
-        placeholder="Title"
-        value="<%=body.title%>"
-        required
-      />
-      <input
-        class="field"
-        type="text"
-        name="description"
-        placeholder="Description"
-        value="<%=body.description%>"
-      />
+    <div class="container w-50">
+      <h1>Edit Link</h1>
+      <form
+        class="d-flex flex-column"
+        action="/edit/<%=body.id%>"
+        method="POST"
+      >
+        <input
+          class="mb-2"
+          type="text"
+          name="title"
+          placeholder="Title"
+          value="<%=body.title%>"
+          required
+        />
+        <input
+          class="mb-2"
+          type="text"
+          name="description"
+          placeholder="Description"
+          value="<%=body.description%>"
+        />
 
-      <input
-        class="field"
-        type="text"
-        name="url"
-        placeholder="URL"
-        value="<%=body.url%>"
-        required
-      />
-      <button>Save / Edit </button>
-
-      <h3><%=err.message%></h3>
-    </form>
+        <input
+          class="mb-4"
+          type="text"
+          name="url"
+          placeholder="URL"
+          value="<%=body.url%>"
+         
+          required
+        />
+        <button class="btn btn-primary">Save / Edit</button>
+      </form>
+      <%if(err) {%>
+        <div class="alert alert-danger fade show alert-dismissible mt-2 ">
+          <a href="#" class="close" data-dismiss="alert">&times;</a>
+          <strong>Error: </strong><%=err.message%>
+        <div>
+          <%}%>
+    </div>
   </body>
 </html>
