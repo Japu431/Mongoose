@@ -1,11 +1,16 @@
 const Link = require("../models/Link");
 
-const redirect = async (req, res) => {
+const redirect = async (req, res, next) => {
   let title = req.params.title;
   try {
-    let docs = await Link.find({ title });
-    console.log(docs);
-    res.redirect(docs[0].url);
+    let doc = await Link.findOne({ title });
+    console.log(doc);
+
+    if (doc) {
+      res.redirect(doc.url);
+    } else {
+      next();
+    }
   } catch (err) {
     res.send(`Houve um erro ${err}`);
   }
@@ -14,15 +19,12 @@ const redirect = async (req, res) => {
 const addLink = async (req, res) => {
   let link = new Link(req.body);
 
-  link
-    .save()
-    .then((doc) => {
-      res.send("Link adicionado com sucesso... para ver todos os links insira \n\n https://localhost:3000/all");
-    })
-    .catch((err) => {
-      console.log(err);
-      res.render("index", { err, body: req.body });
-    });
+  try {
+    let doc = await link.save();
+    res.redirect("/");
+  } catch (err) {
+    res.render("index", { err, body: req.body });
+  }
 };
 
 const allLinks = async (req, res) => {
@@ -42,10 +44,10 @@ const deleteLink = async (req, res) => {
   }
 
   try {
-    await Link.findByIdAndDelete(id)
-    res.redirect('/all');
+    await Link.findByIdAndDelete(id);
+    res.redirect("/");
   } catch (err) {
-    res.status(404).send(err)
+    res.status(404).send(err);
   }
 };
 
